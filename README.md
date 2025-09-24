@@ -44,13 +44,13 @@ Isso ocorre especialmente no CMD clássico do Windows, que não possui suporte c
 
 ### 🔹 Windows (MinGW)
 ```bash
-gcc -o war.exe main.c
+gcc -o war.exe war.c
 ./war.exe
 ```
 
 ### 🔹 Linux
 ```bash
-gcc -o war main.c
+gcc -o war war.c
 ./war
 ```
 
