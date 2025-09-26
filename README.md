@@ -1,24 +1,22 @@
-# 🗺️ Game War Simplificado em C
+# 🗺️ Game War em C
 
-Um projeto introdutório feito em **C** para gerenciar territórios em um jogo de estratégia simplificado.  
-Criado como exercício de aprendizado em **estruturas (`struct`)**, **menus interativos** e **manipulação de arrays fixos**.
+Um projeto em **C** para gerenciar territórios e simular batalhas em um jogo de estratégia simplificado.  
+Feito como exercício de aprendizado em **estruturas (`struct`)**, **enum**, **menus interativos**, **arrays dinâmicos** e **simulação de combate**.
 
 ---
 
 ## ⚠️ Aviso de compatibilidade
 
-Este programa foi feito para rodar em **ambiente de terminal (CMD)**.  
-Dependendo do terminal utilizado, **acentos e caracteres especiais podem não ser exibidos corretamente**.  
-
-Isso ocorre especialmente no CMD clássico do Windows, que não possui suporte completo a **UTF-8** por padrão.
+Este programa foi feito para rodar em **terminal (CMD, PowerShell ou Linux Terminal)**.  
+Dependendo do terminal, **acentos, barras e emojis podem não aparecer corretamente**.  
 
 ✅ **Recomendações**:
-- Prefira rodar no **PowerShell** ou **Windows Terminal** para melhor visualização.  
-- Caso use o CMD e queira ativar UTF-8, adicione no início do `main()`:
+- Prefira **PowerShell** ou **Windows Terminal** para melhor visualização.  
+- Para CMD, adicione no início do `main()`:
   ```c
   system("chcp 65001");
   ```
-- Se for rodar exclusivamente no CMD, **evite emojis e acentos** para não comprometer a legibilidade.  
+- Evite emojis e acentos se rodar apenas no CMD clássico.
 
 ---
 
@@ -26,8 +24,12 @@ Isso ocorre especialmente no CMD clássico do Windows, que não possui suporte c
 
 - ✅ Cadastro de territórios com **nome**, **cor** e **quantidade de tropas**  
 - 📋 Listagem de territórios cadastrados  
-- 🚪 Opção para sair com confirmação  
+- ⚔️ Simulação de ataques entre territórios:
+  - Dano proporcional às tropas
+  - Chance aleatória de defesa ou ataque sem perdas
+  - Redistribuição de tropas após vitória ou derrota
 - 🧹 "Limpar tela" simulada imprimindo múltiplas linhas  
+- 🚪 Sair do programa com confirmação
 
 ---
 
@@ -35,7 +37,7 @@ Isso ocorre especialmente no CMD clássico do Windows, que não possui suporte c
 
 - **Linguagem:** C  
 - **Interface:** Terminal (CLI)  
-- **Organização:** `struct`, `switch-case` e arrays fixos  
+- **Organização:** `struct`, `enum`, `switch-case`, arrays dinâmicos  
 - **Compatível com:** Windows e Linux (sem dependências externas)  
 
 ---
@@ -59,33 +61,42 @@ gcc -o war war.c
 ## 🖼️ Exemplo de uso
 
 ```text
-|===========|GAME WAR|================|
---Seja Bem Vindo ao War--
+Turno 0
+Brasil [████████████████████] 50
+Argentina [██████████████    ] 40
+Ataque: Isso foi devastador... (20)
 
- 1-Cadastrar Territorios
- 2-Listar Territorios
- 3-Sair
+Turno 1
+Brasil [████████████████    ] 30
+Argentina [████████████      ] 30
+Defesa: tivemos muitas baixas! (15)
 
-Escolha uma opcao: 1
-Digite o Nome do Territorio: Brasil
-Digite a Cor do Territorio: Verde
-Digite a Quantidade de Tropas: 50
-
-Você deseja continuar atribuindo territorios? (y/n): y
-Digite o Nome do Territorio: Argentina
-Digite a Cor do Territorio: Azul
-Digite a Quantidade de Tropas: 40
-
-========= Territorios Cadastrados =========
-1) Nome do Territorio/Nacao: Brasil
-   Cor do Territorio: Verde
-   Forcas Terrestres: 50
-========================
-2) Nome do Territorio/Nacao: Argentina
-   Cor do Territorio: Azul
-   Forcas Terrestres: 40
-========================
+🏆 O atacante conquistou o território!
 ```
+
+---
+
+## 🗂️ Estruturas e enums
+
+### `struct CreateTerritory`
+```c
+typedef struct {
+    char name[50];      // Nome do território
+    char color[50];     // Cor do território
+    int  soldiers;      // Número de soldados
+} CreateTerritory;
+```
+
+### `enum Menu`
+```c
+typedef enum {
+    CADASTRAR = 1,
+    LISTAR_TERRITORY,
+    SIMULAR_ATAQUE,
+    SAIR
+} Menu;
+```
+- Controla o menu principal do jogo.
 
 ---
 
@@ -93,41 +104,46 @@ Digite a Quantidade de Tropas: 40
 
 ```mermaid
 classDiagram
-    class createMap {
-        char localname[50]
-        char color[10]
+    class CreateTerritory {
+        char name[50]
+        char color[50]
         int soldiers
     }
 
     class Menu {
         1 - Cadastrar Territorios
         2 - Listar Territorios
-        3 - Sair
+        3 - Simular Ataque
+        4 - Sair
     }
 
-    Menu --> createMap : gerencia
+    Menu --> CreateTerritory : gerencia
 ```
 
 ---
 
-## 🛠️ Melhorias futuras 
+## 🛠️ Melhorias futuras / implementadas
 
+- [x] Cadastro e listagem de territórios  
+- [x] Simulação de batalhas entre territórios  
 - [ ] Permitir edição de territórios já cadastrados  
-- [ ] Limpar tela de forma real (ex: `system("cls")` no Windows e `system("clear")` no Linux)  
-- [ ] Adicionar persistência em arquivo (`.txt`)  
+- [ ] Limpar tela de forma real (`system("cls")` ou `system("clear")`)  
+- [ ] Persistência em arquivo (`.txt`)  
 - [ ] Ampliar limite de territórios (`MAX_TERRITORY`)  
-- [ ] Simulação de batalhas entre territórios  
+- [ ] Melhorar IA de combate e redistribuição de tropas  
+- [ ] Adicionar inventário e recursos extras
 
 ---
 
 ## 🤝 Contribuição
 
-Esse projeto foi feito como aprendizado, mas contribuições são bem-vindas!  
-Se quiser melhorar o código, abra uma **Issue** ou envie um **Pull Request**.  
+Contribuições são bem-vindas!  
+Abra uma **Issue** ou envie um **Pull Request** para melhorias ou sugestões.
 
 ---
 
 ## 📜 Licença
 
-Este projeto está sob a licença **MIT**.  
-Você pode usá-lo, modificá-lo e distribuí-lo livremente, desde que mantenha os créditos.  
+Licença **MIT**.  
+Você pode usar, modificar e distribuir livremente, mantendo os créditos.
+
